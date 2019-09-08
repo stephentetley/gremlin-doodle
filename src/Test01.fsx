@@ -9,11 +9,12 @@
 open Gremlin.Net.Driver
 open Gremlin.Net.Driver.Remote
 open Gremlin.Net.Process.Traversal
+open Gremlin.Net.Structure
 
 let demo01 () = 
     let remoteConnection = new DriverRemoteConnection(new GremlinClient(new GremlinServer("localhost", 8182)))
     let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
-    let ans = g.V().Has("person", "name", "marko").Out("knows").ToList()
+    let ans : Vertex list = g.V().Has("person", "name", "marko").Out("knows").ToList() |> List.ofSeq
     remoteConnection.Dispose() |> ignore
     ans
 
