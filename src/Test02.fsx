@@ -10,17 +10,17 @@ open System.Collections.Generic
 open Gremlin.Net.Driver
 open Gremlin.Net.Driver.Remote
 open Gremlin.Net.Process.Traversal
-open Gremlin.Net
 
-let dictToMap (source : IDictionary<_,_>) : Map<_,_> = 
+
+let dictToMap (source : IDictionary<'key,'value>) : Map<'key,'value> = 
     source |> Seq.map (|KeyValue|) |> Map.ofSeq
 
-let loadData () : GraphTraversal<string,string> = 
+let loadData () : unit = 
     let remoteConnection = new DriverRemoteConnection(new GremlinClient(new GremlinServer("localhost", 8182)))
     let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
     let a = g.Io(@"e:/coding/fsharp/gremlin-doodle/data/air-routes-small.xml").Read() 
     remoteConnection.Dispose() |> ignore
-    a
+
 
 
 let demo01 () = 
