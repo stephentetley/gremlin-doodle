@@ -9,4 +9,9 @@
 #load "..\src\SLGremlin\Core\GremlinMonad.fs"
 open SLGremlin.Core
 
+let demo01 () = 
+    runWithGremlinServer "localhost" 8182
+        <| withTraversal (fun g -> g.V().Count().Next() |> mreturn)
+
+
 
