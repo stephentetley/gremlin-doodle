@@ -8,12 +8,13 @@
     <None Include="Test01.fsx" />
     <None Include="Test02.fsx" />
     <None Include="Test03.fsx" />
+    <None Include="TestOrientDBDirect.fsx" />
+    <None Include="TestOrientDBGremlin.fsx" />
   </ItemGroup>
-
-  <ItemGroup />
 
   <ItemGroup>
     <PackageReference Include="Gremlin.Net" Version="3.4.3" />
+    <PackageReference Include="OrientDB.NETStandard-1.5" Version="0.1.13" />
   </ItemGroup>
 
 </Project>
