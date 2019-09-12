@@ -11,6 +11,7 @@
     <None Include="Doodle\TestOrientDBDirect.fsx" />
     <None Include="Doodle\TestOrientDBGremlin.fsx" />
     <None Include="Test01.fsx" />
+    <None Include="Test02.fsx" />
   </ItemGroup>
 
   <ItemGroup>
