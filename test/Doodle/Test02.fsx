@@ -15,20 +15,21 @@ open Gremlin.Net.Process.Traversal
 let dictToMap (source : IDictionary<'key,'value>) : Map<'key,'value> = 
     source |> Seq.map (|KeyValue|) |> Map.ofSeq
 
-let loadData () : unit = 
+let loadData () : int64 = 
     let remoteConnection = new DriverRemoteConnection(new GremlinClient(new GremlinServer("localhost", 8182)))
     let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
-    let a = g.Io(@"e:/coding/fsharp/gremlin-doodle/data/air-routes-small.xml").Read() 
+    let a = g.Io(@"e:/coding/fsharp/gremlin-doodle/data/air-routes-small.xml").Read().Iterate()
+    let ans = g.V().Count().Next()
     remoteConnection.Dispose() |> ignore
-
+    ans
 
 
 let demo01 () = 
     let remoteConnection = new DriverRemoteConnection(new GremlinClient(new GremlinServer("localhost", 8182)))
     let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
-    g.ToString() |> printfn "%s"
+    let ans = g.V().Count().Next()
     remoteConnection.Dispose() |> ignore
-    ()
+    ans
 
 
 let demo02 () : Map<string, int64> = 

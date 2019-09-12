@@ -14,4 +14,10 @@ let demo01 () =
         <| withTraversal (fun g -> g.V().Count().Next() |> mreturn)
 
 
+let loadData () = 
+    runWithGremlinServer "localhost" 8182
+        <| gremlinDb { 
+                let! _ = withTraversal (fun g -> g.Io(@"e:/coding/fsharp/gremlin-doodle/data/air-routes-small.xml").Read().Iterate() |> mreturn)
+                return! withTraversal (fun g -> g.V().Count().Next() |> mreturn)
+            }
 

@@ -47,3 +47,14 @@ this is considered bad practice (Lawrence, p164 - pdf 174):
 
 > gremlin> e = v1.addEdge('friend', v2)
 
+## Loading graphs
+
+> gremlin> graph = TinkerGraph.open()
+> gremlin> g = graph.traversal()
+> gremlin> g.V().count()
+> ==> 0
+> gremlin> graph.io(graphml()).readGraph('e:/coding/fsharp/gremlin-doodle/data/air-routes-small.xml')
+> gremlin> g.V().count()
+> ==> 47
+
+
