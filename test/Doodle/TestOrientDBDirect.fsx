@@ -36,7 +36,7 @@ let orientDB (password : string) : Orient.Client.ODatabase =
 let demo01 (password : string) = 
     try
         let odb = orientDB (password)
-        odb.CountRecords |> printfn "Count Records %i"    
+        odb.CountRecords |> printfn "Count Records %i" 
         odb.Close()
         ()
     with

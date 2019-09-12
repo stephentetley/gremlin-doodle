@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Doodle\Test01.fsx" />
+    <None Include="Doodle\Test02.fsx" />
+    <None Include="Doodle\Test03.fsx" />
+    <None Include="Doodle\TestOrientDBDirect.fsx" />
+    <None Include="Doodle\TestOrientDBGremlin.fsx" />
+    <None Include="Test01.fsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Gremlin.Net" Version="3.4.3" />
+    <PackageReference Include="Hashids-fs" Version="2.0.0" />
+    <PackageReference Include="OrientDB.NETStandard-1.5" Version="0.1.13" />
+  </ItemGroup>
+
+</Project>

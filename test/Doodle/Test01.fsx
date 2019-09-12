@@ -19,3 +19,9 @@ let demo01 () =
     ans
 
 
+let demo02 () = 
+    let remoteConnection = new DriverRemoteConnection(new GremlinClient(new GremlinServer("localhost", 8182)))
+    let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
+    let ans = g.V().Count().Next()
+    remoteConnection.Dispose() |> ignore
+    ans

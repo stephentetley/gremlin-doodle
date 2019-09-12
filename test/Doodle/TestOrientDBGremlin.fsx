@@ -18,6 +18,10 @@ open Newtonsoft.Json.Linq
 
 // OrientDB server must be running on port 8182
 
+// For a proper treatment of record ID see link below, although it looks like we can 
+// confortably treat them as strings
+// https://orientdb.com/docs/2.0/orientdb.wiki/Tutorial-Record-ID.html
+
 
 let oRecordIdReader = 
     { new IGraphSONDeserializer 
@@ -53,10 +57,33 @@ let loadData (password : string) : unit =
 let demo01 (password)  = 
     let remoteConnection = makeConnection (password)
     let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
-    let a = g.V().ToList()
+    let a = g.V().ToList() |> List.ofSeq
     remoteConnection.Dispose() |> ignore
     a
     
 
 
+let demo02 (password)  = 
+    let remoteConnection = makeConnection (password)
+    let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
+    let a = g.V().Count().Next()
+    remoteConnection.Dispose() |> ignore
+    a
+    
+// Exists for me...
+let demo03 (password)  = 
+    let remoteConnection = makeConnection (password)
+    let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
+    let a = g.V("#48:12").Next()
+    remoteConnection.Dispose() |> ignore
+    a
 
+// Does not exist
+let demo03a (password)  = 
+    let remoteConnection = makeConnection (password)
+    let g = AnonymousTraversalSource.Traversal().WithRemote(remoteConnection)
+    let a = g.V("#02:1000").Next()
+    remoteConnection.Dispose() |> ignore
+    a
+    
+    
