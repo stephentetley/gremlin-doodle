@@ -39,10 +39,10 @@ let loadData () : GremlinDb<int64> =
     // @"e:/coding/fsharp/gremlin-doodle/data/air-routes-small.xml"
     let path = inputPath "air-routes-small.xml"
     let addAirport name code = 
-        withTraversal <| fun g -> g.AddV("airport").Property("name", name).Property("code", code).Next() |> mreturn 
+        withTraversal <| fun g -> g.AddV("airport").Property("name", name).Property("code", code).Next()
     
     let addTerminal (ix :int) (name :string) (parentCode : string) : GremlinDb<Vertex> = 
-        withTraversal <| fun g -> g.AddV("terminal").Property("name", name).Next() |> mreturn
+        withTraversal <| fun g -> g.AddV("terminal").Property("name", name).Next()
 
     let addLink (child : Vertex) (parentCode : string) = 
         withTraversal <| fun g -> g.V().Has("code", parentCode).AddE("contains").To(child).Next() |> mreturn
@@ -50,22 +50,22 @@ let loadData () : GremlinDb<int64> =
     gremlinDb { 
         let! _ = forMz airports (fun (a,b) -> addAirport a b)
         let! _ = forMz terminals (fun (a,b, c) -> addTerminal a b c >>= fun t -> addLink t c)
-        return! withTraversal (fun g -> g.V().Count().Next() |> mreturn)
+        return! withTraversal <| fun g -> g.V().Count().Next() 
     }
 
 let getAirports () : GremlinDb<Vertex list> = 
-    withTraversal <| fun g -> (g.V().HasLabel("airport").ToList() |> Seq.toList |> mreturn)
+    withTraversal <| fun g -> g.V().HasLabel("airport").ToList() |> Seq.toList
 
 
 let getAirports2 () : GremlinDb<string list> = 
-    withTraversal <| fun g -> (g.V().HasLabel("airport").Values().ToList() |> Seq.toList |> mreturn)
+    withTraversal <| fun g -> g.V().HasLabel("airport").Values().ToList() |> Seq.toList
 
 let deleteAll () : GremlinDb<Vertex> = 
-    withTraversal <| fun g -> (g.V().Drop().Next() |> mreturn)
+    withTraversal <| fun g -> g.V().Drop().Next()
 
 let dumpToFile (path : string) : GremlinDb<unit> = 
-    withTraversal <| fun g -> g.Io(path).Write().Iterate() |> mreturn |>> (fun _ -> ())
+    withTraversal <| fun g -> g.Io(path).Write().Iterate() |> fun _ -> ()
 
 // > kids1 "MAN" |> runSimple ;;
 let kids1 (code : string) = 
-    withTraversal <| fun g -> g.V().Has("code", code).Out().Path().By("name").ToList() |> mreturn
+    withTraversal <| fun g -> g.V().Has("code", code).Out().Path().By("name").ToList()

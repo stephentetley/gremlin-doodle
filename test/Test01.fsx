@@ -16,7 +16,7 @@ let inputPath (fileName : string) : string =
 
 let demo01 () = 
     runWithGremlinServer "localhost" 8182
-        <| withTraversal (fun g -> g.V().Count().Next() |> mreturn)
+        << withTraversal <| fun g -> g.V().Count().Next()
 
 
 let loadData () = 
@@ -24,7 +24,7 @@ let loadData () =
     let path = inputPath "air-routes-small.xml"
     runWithGremlinServer "localhost" 8182
         <| gremlinDb { 
-                let! _ = withTraversal (fun g -> g.Io(path).Read().Iterate() |> mreturn)
-                return! withTraversal (fun g -> g.V().Count().Next() |> mreturn)
+                let! _ = withTraversal <| fun g -> g.Io(path).Read().Iterate() 
+                return! withTraversal <| fun g -> g.V().Count().Next()
             }
 

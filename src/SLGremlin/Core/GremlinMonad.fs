@@ -73,9 +73,9 @@ module GremlinMonad =
         runGremlinDb conn action
 
 
-    let withTraversal (fn : GraphTraversalSource -> GremlinDb<'a>) : GremlinDb<'a> = 
+    let withTraversal (fn : GraphTraversalSource -> 'a) : GremlinDb<'a> = 
         GremlinDb <| fun gts -> 
-            apply1 (fn gts) gts
+            let ans = fn gts in Ok ans
 
     // ************************************************************************
     // Usual monadic operations
